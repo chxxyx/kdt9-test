@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>로그인</h1>
+        <form name="form-login">
+            <label for="userid">ID</label>
+            <input type="text" id="userid" /><br />
+            <label for="pw">PW</label>
+            <input type="password" id="pw" /><br />
+            <button type="button" onclick="login()">로그인</button>
+        </form>
+        <form action="/user/profile" method="post" name="form-profile">
+            <input type="hidden" name="userid" />
+        </form>
+
+        <script>
+            function login() {
+                const form = document.forms['form-login'];
+                axios({
+                    method: 'POST',
+                    url: '/user/signin',
+                    data: {
+                        userid: form.userid.value,
+                        pw: form.pw.value,
+                    },
+                }).then((res) => {
+                    console.log('res', res);
+                    if (res.data.result) {
+                        alert('로그인 성공');
+                        // 로그인 성공하는 순간 로그인 한 유저가 입력한 아이디가 인풋에 넘어가고 submit으로 제출해서 동작, 
+                        // 이걸 히든하는 이유는 굳이 사용자에게 보여줄 필요가 없는 불필요한 기능이므로 숨긴다.
+                        // 또 다른 예시로 사용자가 입력하는 정보들 외에도 개발자한테 필요한 데이터들을 사용자는 모르게 !
+                        const form_profile = document.forms['form-profile'];
+                        
+                        // name="userid" value 값을 박아넣어줌
+                        form_profile.userid.value = form.userid.value;
+                        form_profile.submit();
+                    } else {
+                        //1. window.location.href = '/user/signin'
+                        //2. window.location.reload()
+                        form.reset();
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
