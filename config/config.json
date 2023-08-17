@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "user",
-    "password": "1234",
+    "username": "admin",
+    "password": "seo138234",
     "database": "kdt",
-    "host": "localhost",
+    "host": "kdt-test.cmbd0oxeyj6f.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
